@@ -79,7 +79,8 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      var count = 0;
+      var count = 0; 
+      //Returns an array of arrays
       for (var i = 0; i < this.rows()[rowIndex].length; i++) {
         count += this.rows()[rowIndex][i];
       }
@@ -105,6 +106,7 @@
     hasColConflictAt: function(colIndex) {
       var boardLen = this.rows().length;
       var count = 0;
+      
       for (var row = 0; row < boardLen; row++) {
         count += this.rows()[row][colIndex];
       }
@@ -134,6 +136,7 @@
       var count = 0;
       for (var row = 0; row < boardLen; row++) {
         for (var col = 0; col < boardLen; col++) {
+          //Adjusted col to grab lower left board corners
           var adjustedCol = col - majorDiagonalColumnIndexAtFirstRow;
           if (row === adjustedCol && board[row][col] !== undefined) {
             count += board[row][col];
@@ -147,6 +150,7 @@
     hasAnyMajorDiagonalConflicts: function() {
       var board = this.rows();
       var boardLen = board.length;
+      //negative extends the board 
       var negative = -boardLen + 1;
       for (var start = negative; start < boardLen; start++) {
         if(this.hasMajorDiagonalConflictAt(start)) {
@@ -174,6 +178,7 @@
       var count = 0;
       for (var row = 0; row < boardLen; row++) {
         for (var col = 0; col < boardLen; col++) {
+          //When col+row is found should equals the given input location
           if ((col + row) === minorDiagonalColumnIndexAtFirstRow && board[row][col] !== undefined) {
             count += board[row][col];
           }
