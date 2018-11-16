@@ -126,9 +126,32 @@
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function(n) {
-  var solution = undefined; //fixme
+  var solution;
+  var board = new Board({'n': n});
+  var counter = 0;
+  if (n === 0) {
+    return [];
+  }
+  var toggler = function(row) {
+    for (var col = 0; col < n; col++) {
+      board.togglePiece(row, col);
+      counter++;
+      if (board.hasAnyQueensConflicts()) {
+        board.togglePiece(row, col);
+        counter--; 
+      } else if (counter === n) {
+        solution = _.map(board.rows(), el => el.slice());
+        console.log(solution);
+      } else {
+        toggler(row + 1);
+        board.togglePiece(row, col);
+        counter--;
+      }
+    }
+  }
 
-  console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
+  toggler(0);
+  // console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
   return solution;
 };
 
